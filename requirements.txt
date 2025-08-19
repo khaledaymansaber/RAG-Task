@@ -10,12 +10,9 @@ google-generativeai==0.8.5
 # Vector store
 chromadb==0.5.3
 
-# Embeddings
-sentence-transformers==2.7.0
-torch>=2.2.0,<2.3.0
-
 # PDF / image / utils
 pypdf==4.2.0
 numpy==1.26.0
 pillow==10.0.0
 tqdm==4.66.1
+
