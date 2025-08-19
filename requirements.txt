@@ -1,0 +1,22 @@
+streamlit>=1.37.0
+
+# LangChain core & community
+langchain>=0.2.14
+langchain-core>=0.2.35
+langchain-community>=0.2.12
+
+# Gemini (Google Generative AI)
+langchain-google-genai>=2.1.9
+google-generativeai>=0.8.5
+
+# Vector store
+chromadb>=0.5.3
+
+# Embeddings (local + transformer-based)
+sentence-transformers>=2.7.0
+
+# PDF / image / utils
+pypdf>=4.2.0
+numpy
+pillow
+tqdm
