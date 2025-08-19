@@ -1,5 +1,0 @@
-streamlit==1.37.0
-numpy==1.26.0
-pillow==10.0.0
-tqdm==4.66.1
-pypdf==4.2.0
