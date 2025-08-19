@@ -13,9 +13,15 @@ def load_retriever():
     id_key = "doc_id"
 
     # Load vectorstore (Chroma)
+    # Use synchronous client to avoid Streamlit async loop issues
+    embedding_function = GoogleGenerativeAIEmbeddings(
+        model="models/embedding-001",
+        async_client=False  # <--- important fix
+    )
+
     vectorstore = Chroma(
         collection_name="multi_modal_rag",
-        embedding_function=GoogleGenerativeAIEmbeddings(model="models/embedding-001"),
+        embedding_function=embedding_function,
         persist_directory="./index",  # must exist in repo
     )
 
