@@ -14,7 +14,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 from retriever_loader import load_retriever
 
-# -------- Load retriever (expects ./index + docstore.json) -------
+# -------- Load retriever (expects ./index/faiss_index + docstore.json) -------
 retriever = load_retriever()
 
 def parse_docs(docs):
@@ -66,7 +66,7 @@ rag_chain = (
 )
 
 # -------------------- UI --------------------
-st.title("📄 Multi-Modal RAG with Gemini")
+st.title("📄 Multi-Modal RAG with Gemini (FAISS)")
 st.caption("Ask questions over your indexed text, tables, and images")
 
 q = st.text_input("Your question")
