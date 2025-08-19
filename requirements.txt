@@ -1,22 +1,29 @@
-# Streamlit
+# Streamlit for the app
 streamlit>=1.26.1,<2.0
 
-# LangChain core and Google Generative AI
+# LangChain core
 langchain>=0.2.35
-langchain-core>=0.2.35
+
+# LangChain community modules (vectorstores, etc.)
+langchain-community>=0.2.12
+
+# Google Generative AI connector
 langchain-google-genai>=2.1.0
 
-# Common ML / NLP dependencies
+# Standard Python utilities
 numpy>=1.25.3
 pandas>=2.1.0
-scipy>=1.11.0
+python-dotenv>=1.0.0
+requests>=2.31.0
 
-# Optional: for vectorstores and embeddings
-faiss-cpu>=1.7.4
-tiktoken>=0.4.0
-
-# Utilities
+# Rich for better logging & visuals
 rich>=14.1.0
 markdown-it-py>=4.0.0
 pygments>=2.19.2
 mdurl>=0.1.2
+
+# Optional: async support for LangChain
+aiohttp>=3.9.0
+
+# Optional: for embeddings/vectorstores
+tiktoken>=0.4.0
