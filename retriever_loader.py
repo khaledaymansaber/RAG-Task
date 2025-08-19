@@ -1,40 +1,29 @@
 import os
 import json
-import asyncio
-from langchain.vectorstores import Chroma
-from langchain.storage import InMemoryStore
+from langchain.vectorstores import FAISS
+from langchain_community.storage import InMemoryStore
 from langchain.retrievers.multi_vector import MultiVectorRetriever
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-def create_embeddings():
-    """
-    Safely create GoogleGenerativeAIEmbeddings in Streamlit threads.
-    """
-    try:
-        return GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    except RuntimeError:
-        # Create a new event loop if none exists (common in Streamlit threads)
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        return GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-
 def load_retriever():
     """
-    Load retriever from Chroma (index folder) + docstore.json
+    Load retriever from FAISS (index folder) + docstore.json
     """
     id_key = "doc_id"
 
-    # Load vectorstore (Chroma)
-    vectorstore = Chroma(
-        collection_name="multi_modal_rag",
-        embedding_function=create_embeddings(),
-        persist_directory="./index",  # must exist in repo
-    )
+    # Create embeddings
+    embedding_function = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+
+    # Load FAISS vectorstore
+    index_path = "./index/faiss_index"
+    if os.path.exists(index_path):
+        vectorstore = FAISS.load_local(index_path, embedding_function)
+    else:
+        vectorstore = FAISS.from_texts([], embedding_function)
 
     # Load docstore (parent mapping)
     store = InMemoryStore()
     docstore_path = os.path.join("index", "docstore.json")
-
     if os.path.exists(docstore_path):
         with open(docstore_path, "r", encoding="utf-8") as f:
             parent_docs = json.load(f)
