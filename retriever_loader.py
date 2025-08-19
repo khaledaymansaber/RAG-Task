@@ -1,7 +1,6 @@
 import os
 import json
 from langchain.vectorstores import FAISS
-from langchain_community.storage import InMemoryStore
 from langchain.retrievers.multi_vector import MultiVectorRetriever
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
@@ -21,18 +20,17 @@ def load_retriever():
     else:
         vectorstore = FAISS.from_texts([], embedding_function)
 
-    # Load docstore (parent mapping)
-    store = InMemoryStore()
+    # Load docstore (simple dict instead of InMemoryStore)
+    docstore = {}
     docstore_path = os.path.join("index", "docstore.json")
     if os.path.exists(docstore_path):
         with open(docstore_path, "r", encoding="utf-8") as f:
-            parent_docs = json.load(f)
-        store.mset(list(parent_docs.items()))
+            docstore.update(json.load(f))
 
     # Build retriever
     retriever = MultiVectorRetriever(
         vectorstore=vectorstore,
-        docstore=store,
+        docstore=docstore,  # pass dictionary directly
         id_key=id_key,
     )
 
